@@ -24,6 +24,7 @@ const createNote = async (req, res) => {
 
 const getMyNotes = async (req, res) => {
   try {
+    console.log(req.user.id);
     const notes = await Note.find({ userId: req.user.id });
 
     res.json(notes);

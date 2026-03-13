@@ -5,12 +5,22 @@ const userRoutes = require("./src/routes/auth");
 dotenv.config(); 
 const app = express();
 
+const cors = require("cors");
+app.use(cors());
+
 const cookieParser = require("cookie-parser");
 
 app.use(cookieParser());
 
 app.use(express.json());
 app.use("/",userRoutes);
+
+app.use(
+  cors({
+    origin: "http://localhost:5173", // React app URL
+    credentials: true,               // Very important!
+  })
+);
 
 connectDB().then(()=>{
   app.listen(process.env.PORT, () => {
