@@ -1,10 +1,19 @@
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 
-function Login({ email, setEmail, password, setPassword,loginstatus,setLoginstatus }) {
+function Login({ email, setEmail, password, setPassword, setLoginstatus }) {
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if (token) {
+      navigate("/notes");
+    }
+  }, []);
 
   const handleLogin = async () => {
 
@@ -24,7 +33,6 @@ function Login({ email, setEmail, password, setPassword,loginstatus,setLoginstat
         password
       });
 
-      // save token
       localStorage.setItem("token", res.data.token);
 
       Swal.fire({
@@ -32,7 +40,11 @@ function Login({ email, setEmail, password, setPassword,loginstatus,setLoginstat
         text: "Login Successful",
         icon: "success"
       });
+
       setLoginstatus(true);
+      setEmail("");
+      setPassword("");
+
       navigate("/notes");
 
     } catch (error) {
@@ -44,7 +56,6 @@ function Login({ email, setEmail, password, setPassword,loginstatus,setLoginstat
       });
 
     }
-
   };
 
   return (
@@ -52,9 +63,6 @@ function Login({ email, setEmail, password, setPassword,loginstatus,setLoginstat
       <div style={styles.box}>
 
         <h2>Login</h2>
-        {/* {
-          loginstatus && setLoginstatus(!loginstatus)
-        } */}
 
         <input
           type="email"
@@ -86,10 +94,32 @@ function Login({ email, setEmail, password, setPassword,loginstatus,setLoginstat
 }
 
 const styles = {
-  container:{height:"100vh",display:"flex",justifyContent:"center",alignItems:"center",background:"#f4f4f4"},
-  box:{background:"white",padding:"30px",width:"300px",textAlign:"center",borderRadius:"8px"},
-  input:{width:"90%",padding:"10px",margin:"10px 0"},
-  btn:{width:"100%",padding:"10px",background:"green",color:"white",border:"none"}
+  container:{
+    height:"100vh",
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
+    background:"#f4f4f4"
+  },
+  box:{
+    background:"white",
+    padding:"30px",
+    width:"300px",
+    textAlign:"center",
+    borderRadius:"8px"
+  },
+  input:{
+    width:"90%",
+    padding:"10px",
+    margin:"10px 0"
+  },
+  btn:{
+    width:"100%",
+    padding:"10px",
+    background:"green",
+    color:"white",
+    border:"none"
+  }
 };
 
 export default Login;

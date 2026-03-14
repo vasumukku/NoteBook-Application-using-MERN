@@ -77,7 +77,22 @@ const loginUser = async (req, res) => {
 }; 
 
 
+const userdetails = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const userdata = await User.findById(userId);
+
+    res.json(userdata);
+  } catch (e) {
+    res.status(401).json({
+      message: "Something went wrong"
+    });
+  }
+};
+
 module.exports = {
   registerUser,
-  loginUser
+  loginUser,
+  userdetails
 }

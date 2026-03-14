@@ -40,6 +40,9 @@ const Notes = () => {
               <p style={styles.content}>{note.content}</p>
               <div style={styles.buttons}>
                 <button style={styles.edit}>Edit</button>
+                <button onClick={() => navigate(`/notebook/${note._id}`)}>
+                    View Details
+                </button> 
                 <button style={styles.delete}>Delete</button>
               </div>
             </div>

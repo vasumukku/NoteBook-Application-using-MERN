@@ -34,6 +34,41 @@ const getMyNotes = async (req, res) => {
   }
 };
 
+const getParticularNotes = async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    if (!userId) {
+      return res.status(400).json({
+        success: false,
+        message: "User ID is required"
+      });
+    }
+
+    const notes = await Note.find({ userId: userId });
+
+    if (!notes || notes.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No notes found for this user"
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Notes fetched successfully",
+      data: notes
+    });
+
+  } catch (error) {
+    console.error("Error fetching notes:", error.message);
+
+    return res.status(500).json({
+      success: false,
+      message: "Internal Server Error"
+    });
+  }
+};
 //admin notes 
 const getallNotes = async (req, res) => {
   try {
@@ -101,6 +136,7 @@ module.exports={
   createNote,
   getMyNotes,
   getallNotes,
+  getParticularNotes,
   editNotes,
   deleteNote
 

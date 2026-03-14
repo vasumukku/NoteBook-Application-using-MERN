@@ -4,6 +4,7 @@ const router = express.Router();
 const { createNote,
   getMyNotes,
   getallNotes,
+  getParticularNotes,
   editNotes,
   deleteNote
 }=require("../controllers/noteController");
@@ -12,6 +13,7 @@ const { createNote,
 router.post("/create",middleware,createNote);
 router.get("/feed",middleware,getMyNotes);
 router.get("/admin/feed",getallNotes);
+router.get("/:id",getParticularNotes);
 router.post("/update/:id",editNotes);
 router.post("/delete/:id",deleteNote);
 module.exports=router;
