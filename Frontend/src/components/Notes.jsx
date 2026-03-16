@@ -8,11 +8,17 @@ const Notes = () => {
 
   const getNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/notes/admin/feed"
-      //   , {
-      //   withCredentials: true,
-      // }
-    );
+      //   const res = await axios.get("http://localhost:5000/notes/feed"
+      //   //   , {
+      //   //   withCredentials: true,
+      //   // }
+      // );
+
+      const res = await axios.get("http://localhost:5000/notes/feed", {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      });
       setNotes(res.data);
     } catch (error) {
       console.log("Error fetching notes:", error);
@@ -41,8 +47,8 @@ const Notes = () => {
               <div style={styles.buttons}>
                 <button style={styles.edit}>Edit</button>
                 <button onClick={() => navigate(`/notebook/${note._id}`)}>
-                    View Details
-                </button> 
+                  View Details
+                </button>
                 <button style={styles.delete}>Delete</button>
               </div>
             </div>

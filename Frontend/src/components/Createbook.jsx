@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
 
 const CreateBook = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  
+  const navigate=useNavigate();
+
   const handleAddBook = async () => {
     if (!title || !content) {
       Swal.fire({
@@ -18,9 +20,14 @@ const CreateBook = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/create",
+        "http://localhost:5000/notes/create",
         { title, content },
-        { withCredentials: true } // if backend uses cookies
+        {
+          withCredentials: true,
+          headers: {
+            authorization: localStorage.getItem("token"),
+          },
+        },
       );
       Swal.fire({
         icon: "success",
@@ -29,6 +36,8 @@ const CreateBook = () => {
       });
       setTitle("");
       setContent("");
+      navigate("/notes");
+
     } catch (error) {
       console.error("Error adding book:", error);
       Swal.fire({

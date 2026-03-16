@@ -24,12 +24,17 @@ function Navbar({ loginstatus, setLoginstatus }) {
 
       const token = localStorage.getItem("token");
 
-      const res = await axios.get("http://localhost:5000/user", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-
+      const res = await axios.get("http://localhost:5000/user",{
+        headers:{
+          authorization: localStorage.getItem("token"),
+        },
+      //   , {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`
+      //   }
+      // }
+    });
+console.log("user data is :" + JSON.stringify(res));      // console.log(res.data.name);
       setUsernamedb(res.data.name);
       setUserEmail(res.data.email);
 

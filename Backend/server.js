@@ -6,7 +6,12 @@ dotenv.config();
 const app = express();
 
 const cors = require("cors");
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:5173"], // React frontend URL
+    credentials: true
+  }) 
+);
 
 const cookieParser = require("cookie-parser");
 
