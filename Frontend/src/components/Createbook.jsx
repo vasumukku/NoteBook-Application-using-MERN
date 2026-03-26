@@ -23,7 +23,7 @@ const CreateBook = () => {
         "http://localhost:5000/notes/create",
         { title, content },
         {
-          withCredentials: true,
+          
           headers: {
             authorization: localStorage.getItem("token"),
           },

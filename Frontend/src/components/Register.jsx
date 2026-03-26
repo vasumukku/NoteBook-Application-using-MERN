@@ -31,7 +31,7 @@ function Register({ name, setName, email, setEmail, password, setPassword,logins
         icon:"success"
       });
 
-      navigate("/login");
+      navigate("/");
 
     } catch (error) {
 
@@ -80,7 +80,7 @@ function Register({ name, setName, email, setEmail, password, setPassword,logins
         </button>
 
         <p>
-          Already have account? <Link to="/login">Login</Link>
+          Already have account? <Link to="/">Login</Link>
         </p>
 
       </div>

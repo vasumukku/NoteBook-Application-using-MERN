@@ -3,13 +3,13 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
  // ✅ import CSS file
 
-const Notes = () => {
+const AdminNotes = () => {
   const [notes, setNotes] = useState([]);
   const navigate = useNavigate();
 
   const getNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/notes/feed", {
+      const res = await axios.get("http://localhost:5000/notes/admin/feed", {
         headers: {
           authorization: localStorage.getItem("token"),
         },
@@ -29,7 +29,7 @@ const Notes = () => {
 
   return (
     <div className="container">
-      <h1 className="heading">Notes</h1>
+      <h1 className="heading"> All users Notes</h1>
 
       {notes.length === 0 ? (
         <p className="noNotes">No Notes Found</p>
@@ -55,4 +55,4 @@ const Notes = () => {
   );
 };
 
-export default Notes;
+export default AdminNotes;

@@ -1,0 +1,244 @@
+/* ===== PAGE ===== */
+.container {
+  padding: 30px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  min-height: 100vh;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+.noNotes {
+  text-align: center;
+  color: #888;
+  font-size: 18px;
+}
+
+/* ===== GRID ===== */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+
+  /* 🔥 TOP BORDER COLOR */
+  border-top: 5px solid #1a73e8;
+
+  /* SHADOW */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+
+  /* ✨ ANIMATION */
+  transition: all 0.3s ease;
+}
+
+/* HOVER EFFECT */
+.card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* ===== TITLE ===== */
+.title {
+  margin-bottom: 15px;
+  color: #222;
+}
+
+/* ===== BUTTON ===== */
+.viewBtn {
+  background: linear-gradient(45deg, #1a73e8, #42a5f5);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+/* BUTTON HOVER */
+.viewBtn:hover {
+  transform: scale(1.05);
+  background: linear-gradient(45deg, #1557b0, #1a73e8);
+}
+
+/* BUTTON CLICK */
+.viewBtn:active {
+  transform: scale(0.95);
+}
+
+/* ===== OPTIONAL: MULTI COLOR TOP BORDER ===== */
+.card:nth-child(2) {
+  border-top: 5px solid #4caf50;
+}
+
+.card:nth-child(3) {
+  border-top: 5px solid #e91e63;
+}
+
+.card:nth-child(4) {
+  border-top: 5px solid #ff9800;
+}
+
+.card:nth-child(5) {
+  border-top: 5px solid #9c27b0;
+}
+
+
+
+
+/* ===== NAVBAR ===== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 15px 30px;
+
+  /* 🌿 Better forest tone (soft, premium) */
+  background: linear-gradient(90deg, #2f5233, #4f772d);
+  color: #f1f7f3;
+
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* LOGO */
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #d8f3dc;
+}
+
+/* RIGHT SIDE */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* 🌿 CREATE BUTTON */
+.createBtn {
+  background: #d8f3dc;
+  color: #2f5233;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+
+  transition: all 0.3s ease;
+}
+
+.createBtn:hover {
+  background: #b7e4c7;
+  transform: scale(1.05);
+}
+
+/* 👤 PROFILE BUTTON */
+.profileBtn {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: none;
+
+  background: #90a955;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+
+  transition: all 0.3s ease;
+}
+
+.profileBtn:hover {
+  background: #4f772d;
+  transform: scale(1.1);
+}
+
+/* 🌿 DROPDOWN */
+.dropdown {
+  position: absolute;
+  right: 20px;
+  top: 70px;
+
+  background: #f8fff9;
+  color: #2f5233;
+  padding: 15px;
+  border-radius: 10px;
+  width: 220px;
+
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+
+  animation: fadeIn 0.3s ease;
+}
+
+/* ✨ ANIMATION */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🌱 LOGIN BUTTON */
+.loginBtn {
+  width: 100%;
+  padding: 10px;
+  background: #74c69d;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.loginBtn:hover {
+  background: #52b788;
+}
+
+/* ✏️ EDIT PROFILE BUTTON */
+.editProfileBtn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #a3b18a;
+  color: #2f5233;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.editProfileBtn:hover {
+  background: #588157;
+  color: white;
+}
+
+/* 🍂 LOGOUT BUTTON */
+.logoutBtn {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  background: #bc4749;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.logoutBtn:hover {
+  background: #a4161a;
+}

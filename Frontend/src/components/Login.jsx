@@ -45,7 +45,14 @@ function Login({ email, setEmail, password, setPassword, setLoginstatus }) {
       setEmail("");
       setPassword("");
 
-      navigate("/notes");
+      if(email=="admin@gmail.com"){
+        navigate("/notes/admin");  
+
+      }else{
+        navigate("/notes");
+      }
+
+     
 
     } catch (error) {
 
@@ -85,7 +92,7 @@ function Login({ email, setEmail, password, setPassword, setLoginstatus }) {
         </button>
 
         <p>
-          Don't have account? <Link to="/">Register</Link>
+          Don't have account? <Link to="/register">Register</Link>
         </p>
 
       </div>

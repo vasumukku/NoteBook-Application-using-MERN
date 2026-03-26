@@ -6,25 +6,36 @@ import Navbar from "./components/Navbar";
 import Notes from "./components/Notes";
 import CreateBook from "./components/Createbook"
 import Notebook from "./components/Notebook"
+import AdminNotes from "./components/AdminNotes"
+import Userdetails from "./components/Userdetails"
+import "./index.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const[name,setName]=useState("");
-  const[email,setEmail]=useState("");
-  const[password,setPassword]=useState("");
-  const[loginstatus,setLoginstatus]=useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginstatus, setLoginstatus] = useState(false);
+
   return (
     <BrowserRouter>
 
-      <Navbar loginstatus={loginstatus} setLoginstatus={setLoginstatus}/>
+      <Navbar loginstatus={loginstatus} setLoginstatus={setLoginstatus} />
 
       <Routes>
-        <Route path="/" element={<Register name={name} setName={setName} email={email} setEmail={setEmail} password={password} setPassword={setPassword}/>} />
-        <Route path="/login" element={<Login email={email} setEmail={setEmail} password={password} setPassword={setPassword}  loginstatus={loginstatus} setLoginstatus={setLoginstatus} />} />
+        <Route path="/register" element={<Register name={name} setName={setName} email={email} setEmail={setEmail} password={password} setPassword={setPassword} />} />
+        <Route path="/" element={<Login email={email} setEmail={setEmail} password={password} setPassword={setPassword} loginstatus={loginstatus} setLoginstatus={setLoginstatus} />} />
         <Route path="/notes" element={<Notes />} /> 
+        <Route path="/notes/admin" element={<AdminNotes />} /> 
         <Route path="/notebook/:id" element={<Notebook />} />
         <Route path="/createbook" element={<CreateBook />} /> 
+        <Route path="/profile" element={<Userdetails />} /> 
 
       </Routes>
+
+      {/* ✅ ADD THIS BELOW */}
+      <ToastContainer position="top-right" autoClose={2000} theme="colored" />
 
     </BrowserRouter>
   );
