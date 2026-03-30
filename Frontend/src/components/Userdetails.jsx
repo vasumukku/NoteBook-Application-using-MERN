@@ -63,7 +63,8 @@ function Userdetails() {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            // Authorization: `Bearer ${token}`,
+             Authorization: localStorage.getItem("token"),
           },
         }
       );

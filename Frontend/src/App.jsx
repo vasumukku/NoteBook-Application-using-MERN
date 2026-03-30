@@ -29,7 +29,7 @@ function App() {
         <Route path="/notes" element={<Notes />} /> 
         <Route path="/notes/admin" element={<AdminNotes />} /> 
         <Route path="/notebook/:id" element={<Notebook />} />
-        <Route path="/createbook" element={<CreateBook />} /> 
+        <Route path="/createbook" element={<CreateBook email={email}/>} /> 
         <Route path="/profile" element={<Userdetails />} /> 
 
       </Routes>

@@ -12,6 +12,7 @@ const Notebook = () => {
 
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [created,setCreated]=useState("");
 
   // ✅ GET NOTE
   const getNote = async () => {
@@ -22,6 +23,7 @@ const Notebook = () => {
       setNote(data);
       setTitle(data.title);
       setContent(data.content);
+      setCreated(data.createdBy.name);
 
     } catch (error) {
       console.log(error);
@@ -99,6 +101,7 @@ const Notebook = () => {
       <p style={styles.date}>
         {formatDate(note.createdAt)}
       </p>
+      <p style={{color:"red"}}>created by {created} </p>
 
       {/* CONTENT */}
       {editMode ? (

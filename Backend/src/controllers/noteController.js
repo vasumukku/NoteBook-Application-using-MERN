@@ -5,11 +5,12 @@ const createNote = async (req, res) => {
     
     const { title, content } = req.body;
 
-    
     const note = new Note({
       userId: req.user.id, 
       title,
-      content
+      content,
+      createdBy: req.user.id
+
     });
     
 
@@ -25,8 +26,9 @@ const createNote = async (req, res) => {
 const getMyNotes = async (req, res) => {
   try {
     console.log(req.user.id);
-    const notes = await Note.find({ userId: req.user.id });
+    // const notes = await Note.find({ userId: req.user.id });
 
+    const notes = await Note.find({ userId: req.user.id }).populate("createdBy", "name");
     res.json(notes);
 
   } catch (error) {
@@ -46,7 +48,7 @@ const getParticularNotes = async (req, res) => {
       });
     }
 
-    const notes = await Note.find({ _id: userId });
+    const notes = await Note.find({ _id: userId }).populate("createdBy", "name");;
 
     if (!notes || notes.length === 0) {
       return res.status(404).json({

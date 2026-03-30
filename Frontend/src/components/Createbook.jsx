@@ -3,7 +3,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
 
-const CreateBook = () => {
+const CreateBook = ({email}) => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const navigate=useNavigate();
@@ -36,7 +36,12 @@ const CreateBook = () => {
       });
       setTitle("");
       setContent("");
-      navigate("/notes");
+      console.log(email);
+      if(email=="admin@gmail.com"){
+        navigate("/notes/admin");
+      }else{
+        navigate("/notes");
+      }
 
     } catch (error) {
       console.error("Error adding book:", error);

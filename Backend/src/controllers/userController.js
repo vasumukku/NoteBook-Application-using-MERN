@@ -1,41 +1,65 @@
-// const editNotes = async (req, res) => {
-//   try {
-//     const { title, content } = req.body;
-//     const usernotesid = req.params.id;
+// // 1. Import packages
+// const express = require("express");
+// const nodemailer = require("nodemailer");
 
-//     const updatedNotes = await Note.findByIdAndUpdate(
-//       usernotesid,
-//       {
-//         title: title,
-//         content: content
-//       },
-//        { returnDocument: "after" }
-//     );
 
-//     if (!updatedNotes) {
-//       return res.status(404).json({ message: "Note not found" });
-//     }
 
-//     res.status(200).json(updatedNotes);
+// // 2. Store OTP (like notebook 📒)
+// let otpStore = {};
 
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
+// // 3. Generate OTP
+// function generateOTP() {
+//   return Math.floor(100000 + Math.random() * 900000).toString();
+// }
+
+// // 4. Setup email sender
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: "mukkuvasu01@gmail.com",
+//     pass: "Vasu@567890" // this is not mail password like dummy i will create now 
 //   }
-// };
+// });
 
 
-// const deleteNote = async (req, res) => {
+// // =========================
+// // 📩 SEND OTP API
+// // =========================
+// app.post("/send-otp", async (req, res) => {
+//   const { email } = req.body;
+
+//   const otp = generateOTP();         // create OTP
+//   otpStore[email] = otp;             // save OTP
+
+//   const mailOptions = {
+//     from: "mukkuvasu01@gmail.com",
+//     to: email,
+//     subject: "Your OTP Code",
+//     text: `Your OTP is ${otp}`
+//   };
+
 //   try {
-//     const note = await Note.findByIdAndDelete(req.params.id);
-
-//     if (!note) { 
-//       return res.status(404).json({ message: "Note not found" });
-//     }
-
-
-//     res.json({ message: "Note Deleted" });
-
-//   } catch (error) {
-//     res.status(500).json({ message: "Server Error" });
+//     await transporter.sendMail(mailOptions);
+//     res.send("OTP sent ✅");
+//   } catch (err) {
+//     res.send("Error ❌");
 //   }
-// };
+// });
+
+
+// // =========================
+// // 🔐 VERIFY OTP API
+// // =========================
+// app.post("/verify-otp", (req, res) => {
+//   const { email, otp } = req.body;
+
+//   if (otpStore[email] === otp) {
+//     delete otpStore[email];   // remove after success
+//     res.send("OTP correct ✅");
+//   } else {
+//     res.send("Wrong OTP ❌");
+//   }
+// });
+
+
+

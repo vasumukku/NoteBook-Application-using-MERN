@@ -9,6 +9,6 @@ router.use("/notes",notesroutes);
 router.post("/register",registerUser);
 router.post("/login",loginUser);
 router.get("/user",middleware,userdetails);
-router.put("/update-profile",updatePassword );
+router.put("/update-profile",middleware,updatePassword );
 
 module.exports=router; 
