@@ -8,6 +8,8 @@ import CreateBook from "./components/Createbook"
 import Notebook from "./components/Notebook"
 import AdminNotes from "./components/AdminNotes"
 import Userdetails from "./components/Userdetails"
+import Otpui from "./components/Otpui"
+import EmailPage from "./components/EmailPage"
 import "./index.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -16,7 +18,7 @@ function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginstatus, setLoginstatus] = useState(false);
+  const [loginstatus, setLoginstatus] = useState(false); 
 
   return (
     <BrowserRouter>
@@ -31,6 +33,8 @@ function App() {
         <Route path="/notebook/:id" element={<Notebook />} />
         <Route path="/createbook" element={<CreateBook email={email}/>} /> 
         <Route path="/profile" element={<Userdetails />} /> 
+        <Route path="/send-otp" element={<Otpui />} />  
+        <Route path="/EmailPage" element={<EmailPage />}/> 
 
       </Routes>
 

@@ -11,8 +11,8 @@ const { createNote,
 
 
 router.post("/create",middleware,createNote);
-router.get("/feed",middleware,getMyNotes);
-router.get("/admin/feed",getallNotes);
+router.get("/feed",middleware,getMyNotes);//
+router.get("/admin/feed",getallNotes);//
 router.get("/:id",getParticularNotes);
 router.put("/:id",editNotes);
 router.delete("/:id",deleteNote);

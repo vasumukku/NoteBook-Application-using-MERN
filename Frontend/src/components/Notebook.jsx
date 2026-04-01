@@ -60,7 +60,8 @@ const Notebook = () => {
       await axios.delete(`http://localhost:5000/notes/${id}`); // ✅ FIXED URL
 
        toast.success("Note deleted successfully 🗑️");
-      navigate("/notes");
+      //  if(email)
+      navigate("/notes/admin");
 
     } catch (error) {
       console.log(error);

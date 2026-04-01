@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 function Userdetails() {
+  const navigate = useNavigate(); // initialize the hook
   const [user, setUser] = useState({});
   const [editMode, setEditMode] = useState(false);
 
@@ -143,6 +145,7 @@ function Userdetails() {
           >
             ✏️ Edit Profile
           </button>
+
         ) : (
           <>
             <button

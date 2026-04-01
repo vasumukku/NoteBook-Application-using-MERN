@@ -8,6 +8,7 @@ const AdminNotes = () => {
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [fav ,setFav]=useState("");
   const navigate = useNavigate();
+const API = import.meta.env.VITE_BACKEND_URL; // ✅ works
 
   const getNotes = async () => {
     try {

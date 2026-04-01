@@ -41,11 +41,19 @@ function Navbar({ loginstatus, setLoginstatus }) {
     navigate("/");
   };
 
+  const details=()=>{
+    if(useremail=="admin@gmail.com"){
+      navigate('/EmailPage');
+    }else{
+      navigate("/profile")
+    }
+  }
+
   return (
     <div className="navbar">
 
       {/* LOGO */}
-      <p className="logo">🚀 My Notes</p>
+      <p className="logo">NoteBook Tracker 🚀 </p>
 
       <div className="nav-right">
 
@@ -88,7 +96,7 @@ function Navbar({ loginstatus, setLoginstatus }) {
         {/* ✨ NEW EDIT PROFILE BUTTON */}
         <button
           className="editProfileBtn"
-          onClick={() => navigate("/profile")}
+          onClick={() => details()}
         >
           Edit Profile
         </button>

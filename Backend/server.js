@@ -9,7 +9,7 @@ const app = express();
 const cors = require("cors");
 app.use(
   cors({
-    origin: ["http://localhost:5173"], // React frontend URL
+     origin: [process.env.FRONTEND_PORT], // React frontend URL
     credentials: true
   }) 
 );
