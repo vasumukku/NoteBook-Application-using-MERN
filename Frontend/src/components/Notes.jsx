@@ -8,10 +8,12 @@ const Notes = () => {
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [fav ,setFav]=useState("");
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 
   const getNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/notes/feed", {
+      const res = await axios.get(`${BASE_URL}/notes/feed`, {
         headers: {
           authorization: localStorage.getItem("token"),
         },

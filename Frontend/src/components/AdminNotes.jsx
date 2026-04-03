@@ -8,11 +8,11 @@ const AdminNotes = () => {
   const [filteredNotes, setFilteredNotes] = useState([]);
   const [fav ,setFav]=useState("");
   const navigate = useNavigate();
-const API = import.meta.env.VITE_BACKEND_URL; // ✅ works
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const getNotes = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/notes/admin/feed", {
+      const res = await axios.get(`${BASE_URL}/notes/admin/feed`, {
         headers: {
           authorization: localStorage.getItem("token"),
         },

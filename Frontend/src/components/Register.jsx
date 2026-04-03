@@ -6,6 +6,8 @@ function Register({ name, setName, email, setEmail, password, setPassword,logins
 
   const navigate = useNavigate();
   // setLoginstatus(!loginstatus);
+    const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
   const handleRegister = async () => {
 
     if (!name || !email || !password) {
@@ -19,7 +21,7 @@ function Register({ name, setName, email, setEmail, password, setPassword,logins
 
     try {
 
-      await axios.post("http://localhost:5000/register", {
+      await axios.post(`${BASE_URL}/register`, {
         name,
         email,
         password

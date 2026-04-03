@@ -5,14 +5,16 @@ import { toast } from "react-toastify";
 
 function EmailPage() {
   const [email, setEmail] = useState("");
+  const [sending, setSending] = useState(false); // default false
   const navigate = useNavigate();
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const handleSendOtp = async () => {
     try {
-      console.log("api calling ");
+      setSending(true); // start loading
 
       const res = await axios.post(
-        "http://localhost:5000/api/send-otp",
+        `${BASE_URL}/api/send-otp`,
         { email: email },
         {
           headers: {
@@ -21,16 +23,14 @@ function EmailPage() {
         }
       );
 
-      // ✅ success toast
       toast.success(res.data.message || "OTP Sent ✅");
 
       navigate("/send-otp", { state: { email } });
 
     } catch (err) {
-      console.log(err);
-
-      // ❌ error toast
       toast.error(err.response?.data?.message || "Error sending OTP");
+    } finally {
+      setSending(false); // stop loading
     }
   };
 
@@ -42,13 +42,57 @@ function EmailPage() {
         type="email"
         placeholder="Enter email"
         onChange={(e) => setEmail(e.target.value)}
+        style={{
+          padding: "10px",
+          width: "250px",
+          borderRadius: "5px",
+          border: "1px solid gray"
+        }}
       />
 
       <br /><br />
-      <button onClick={handleSendOtp}>Send OTP</button>
-      
-      
 
+      <button
+        onClick={handleSendOtp}
+        disabled={sending}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: sending ? "gray" : "blue",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: sending ? "not-allowed" : "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "10px",
+          margin: "auto"
+        }}
+      >
+        {sending && (
+          <span className="loader"></span>
+        )}
+        {sending ? "Sending..." : "Send OTP"}
+      </button>
+
+      {/* 🔹 Spinner CSS */}
+      <style>
+        {`
+          .loader {
+            width: 16px;
+            height: 16px;
+            border: 3px solid white;
+            border-top: 3px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+          }
+
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
     </div>
   );
 }

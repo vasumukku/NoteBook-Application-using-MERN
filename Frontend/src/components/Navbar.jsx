@@ -8,6 +8,7 @@ function Navbar({ loginstatus, setLoginstatus }) {
   const [open, setOpen] = useState(false);
   const [usernamedb, setUsernamedb] = useState("");
   const [useremail, setUserEmail] = useState("");
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -16,7 +17,7 @@ function Navbar({ loginstatus, setLoginstatus }) {
 
   const userdetails = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/user", {
+      const res = await axios.get(`${BASE_URL}/user`, {
         headers: {
           authorization: localStorage.getItem("token"),
         },

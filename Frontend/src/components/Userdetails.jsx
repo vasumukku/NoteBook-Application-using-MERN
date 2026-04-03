@@ -6,6 +6,7 @@ function Userdetails() {
   const navigate = useNavigate(); // initialize the hook
   const [user, setUser] = useState({});
   const [editMode, setEditMode] = useState(false);
+    const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
   const [name, setName] = useState("");
   const [oldPassword, setOldPassword] = useState("");
@@ -18,7 +19,7 @@ function Userdetails() {
   useEffect(() => {
     if (!token) return;
 
-    axios.get("http://localhost:5000/user", {
+    axios.get(`${BASE_URL}/user`, {
       headers: {
         authorization: localStorage.getItem("token"),
       },
@@ -57,7 +58,7 @@ function Userdetails() {
 
     try {
       await axios.put(
-        "http://localhost:5000/update-profile",
+        `${BASE_URL}/update-profile`,
         {
           name,
           oldPassword,

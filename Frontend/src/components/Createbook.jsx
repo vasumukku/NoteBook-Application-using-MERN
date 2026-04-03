@@ -8,6 +8,8 @@ const CreateBook = ({email}) => {
   const [content, setContent] = useState("");
   const navigate=useNavigate();
 
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
   const handleAddBook = async () => {
     if (!title || !content) {
       Swal.fire({
@@ -20,7 +22,7 @@ const CreateBook = ({email}) => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/notes/create",
+        `${BASE_URL}/notes/create`,
         { title, content },
         {
           

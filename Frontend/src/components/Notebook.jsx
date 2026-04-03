@@ -6,7 +6,7 @@ import { useParams, useNavigate } from "react-router-dom";
 const Notebook = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL;
   const [note, setNote] = useState(null);
   const [editMode, setEditMode] = useState(false);
 
@@ -17,7 +17,7 @@ const Notebook = () => {
   // ✅ GET NOTE
   const getNote = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/notes/${id}`);
+      const res = await axios.get(`${BASE_URL}/notes/${id}`);
       const data = res.data.data[0];
 
       setNote(data);
@@ -36,7 +36,7 @@ const Notebook = () => {
       console.log("Updating...");
 
       const res = await axios.put(
-        `http://localhost:5000/notes/${id}`,   // ✅ FIXED URL
+        `${BASE_URL}/notes/${id}`,   // ✅ FIXED URL
         {
           title,
           content,
@@ -57,7 +57,7 @@ const Notebook = () => {
   // ✅ DELETE NOTE (FIXED)
   const deleteNote = async () => {
     try {
-      await axios.delete(`http://localhost:5000/notes/${id}`); // ✅ FIXED URL
+      await axios.delete(`${BASE_URL}/notes/${id}`); // ✅ FIXED URL
 
        toast.success("Note deleted successfully 🗑️");
       //  if(email)
