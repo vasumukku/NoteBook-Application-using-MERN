@@ -57,7 +57,7 @@ function Navbar({ loginstatus, setLoginstatus }) {
     <div className="navbar">
 
       {/* LOGO */}
-      <p className="logo"  onClick={() => navigate("/")}>NoteBook Tracker 🚀 </p>
+      <p className="logo"  style={{cursor:"pointer"}} onClick={() => navigate("/")}>NoteBook Tracker 🚀 </p>
 
       <div className="nav-right">
 
