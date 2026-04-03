@@ -50,11 +50,14 @@ function Navbar({ loginstatus, setLoginstatus }) {
     }
   }
 
+  // const homepage=()=>{
+  //   navigate("/");
+  // }
   return (
     <div className="navbar">
 
       {/* LOGO */}
-      <p className="logo">NoteBook Tracker 🚀 </p>
+      <p className="logo"  onClick={() => navigate("/")}>NoteBook Tracker 🚀 </p>
 
       <div className="nav-right">
 
