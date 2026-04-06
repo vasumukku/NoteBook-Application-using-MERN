@@ -85,7 +85,7 @@ const userdetails = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    const userdata = await User.findById(userId);
+    const userdata = await User.findById(userId).select("-password");
 
     res.json(userdata);
   } catch (e) {
