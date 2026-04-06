@@ -39,7 +39,7 @@ function Register({ name, setName, email, setEmail, password, setPassword,logins
 
       Swal.fire({
         title:"Error",
-        text:"Registration Failed",
+         text: `Registration Failed: ${error?.response?.data?.message || error.message}`,
         icon:"error"
       });
 
@@ -91,7 +91,7 @@ function Register({ name, setName, email, setEmail, password, setPassword,logins
 }
 
 const styles = {
-  container:{height:"100vh",display:"flex",justifyContent:"center",alignItems:"center",background:"#f4f4f4"},
+  container:{height:"80vh",display:"flex",justifyContent:"center",alignItems:"center",background:"#f4f4f4"},
   box:{background:"white",padding:"30px",width:"300px",textAlign:"center",borderRadius:"8px"},
   input:{width:"90%",padding:"10px",margin:"10px 0"},
   btn:{width:"100%",padding:"10px",background:"#007bff",color:"white",border:"none"}

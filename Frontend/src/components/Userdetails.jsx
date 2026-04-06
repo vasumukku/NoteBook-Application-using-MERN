@@ -1,4 +1,5 @@
 import { useState, useEffect, useContext } from "react";
+import { ToastContainer } from "react-toastify";
 import axios from "axios";
 import { UserContext } from "../context/UserContext";
 
@@ -48,10 +49,10 @@ function Userdetails() {
       setNewPassword("");
       setConfirmPassword("");
 
-      alert("Updated successfully ✅");
+       toast.success("Profile updated successfully ✅");
     } catch (err) {
       console.log(err);
-      alert("Update failed ❌");
+      toast.error("Update failed ❌");
     }
   };
 

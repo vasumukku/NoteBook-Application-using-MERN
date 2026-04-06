@@ -104,7 +104,7 @@ function Login({ email, setEmail, password, setPassword, setLoginstatus }) {
 
 const styles = {
   container:{
-    height:"100vh",
+    height:"80vh",
     display:"flex",
     justifyContent:"center",
     alignItems:"center",
