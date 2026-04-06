@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
 
 function Navbar({ loginstatus, setLoginstatus }) {
   const navigate = useNavigate();
@@ -9,6 +8,9 @@ function Navbar({ loginstatus, setLoginstatus }) {
   const [usernamedb, setUsernamedb] = useState("");
   const [useremail, setUserEmail] = useState("");
   const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
+  // ✅ NEW: reference for dropdown
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -36,31 +38,50 @@ function Navbar({ loginstatus, setLoginstatus }) {
     }
   }, [open, loginstatus]);
 
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoginstatus(false);
     navigate("/");
   };
 
-  const details=()=>{
-    if(useremail=="admin@gmail.com"){
-      navigate('/EmailPage');
-    }else{
-      navigate("/profile")
+  const details = () => {
+    if (useremail === "admin@gmail.com") {
+      navigate("/EmailPage");
+    } else {
+      navigate("/profile");
     }
-  }
+  };
 
-  // const homepage=()=>{
-  //   navigate("/");
-  // }
   return (
     <div className="navbar">
-
       {/* LOGO */}
-      <p className="logo"  style={{cursor:"pointer"}} onClick={() => navigate("/")}>NoteBook Tracker 🚀 </p>
+      <p
+        className="logo"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate("/")}
+      >
+        NoteBook Tracker 🚀
+      </p>
 
       <div className="nav-right">
-
         {loginstatus && (
           <button
             className="createBtn"
@@ -79,42 +100,37 @@ function Navbar({ loginstatus, setLoginstatus }) {
         </button>
 
         {/* DROPDOWN */}
-       {open && (
-  <div className="dropdown">
+        {open && (
+          <div className="dropdown" ref={dropdownRef}>
+            {!loginstatus ? (
+              <button
+                className="loginBtn"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+            ) : (
+              <div>
+                <p><b>Name:</b> {usernamedb}</p>
+                <p><b>Email:</b> {useremail}</p>
 
-    {!loginstatus ? (
+                <button
+                  className="editProfileBtn"
+                  onClick={details}
+                >
+                  Edit Profile
+                </button>
 
-      <button
-        className="loginBtn"
-        onClick={() => navigate("/login")}
-      >
-        Login
-      </button>
-
-    ) : (
-
-      <div>
-        <p><b>Name:</b> {usernamedb}</p>
-        <p><b>Email:</b> {useremail}</p>
-
-        {/* ✨ NEW EDIT PROFILE BUTTON */}
-        <button
-          className="editProfileBtn"
-          onClick={() => details()}
-        >
-          Edit Profile
-        </button>
-
-        <button className="logoutBtn" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-
-    )}
-
-  </div>
-)}
-
+                <button
+                  className="logoutBtn"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

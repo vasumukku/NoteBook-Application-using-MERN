@@ -1,57 +1,27 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 function Userdetails() {
-  const navigate = useNavigate(); // initialize the hook
-  const [user, setUser] = useState({});
-  const [editMode, setEditMode] = useState(false);
-    const BASE_URL = import.meta.env.VITE_BACKEND_URL;
+  const { userData, fetchUserDetails, loading } = useContext(UserContext);
 
+  const [editMode, setEditMode] = useState(false);
   const [name, setName] = useState("");
+
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const token = localStorage.getItem("token");
+  const BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000";
 
-  // 🔹 Fetch user
   useEffect(() => {
-    if (!token) return;
+    if (userData?.name) {
+      setName(userData.name);
+    }
+  }, [userData]);
 
-    axios.get(`${BASE_URL}/user`, {
-      headers: {
-        authorization: localStorage.getItem("token"),
-      },
-    })
-    .then((res) => {
-      setUser(res.data);
-      cosole.log(res.data);
-      setName(res.data["name"]);
-    })
-    .catch((err) => console.log(err));
-  }, [token]);
-
-
-
-  //  try {
-  //       const res = await axios.get("http://localhost:5000/user", {
-  //         headers: {
-  //           authorization: localStorage.getItem("token"),
-  //         },
-  //       });
-  
-  //       setUsernamedb(res.data.name);
-  //       setUserEmail(res.data.email);
-  //     } catch (e) {
-  //       console.log("Error fetching user");
-  //     }
-
-
-
-  // 🔹 Update
   const handleUpdate = async () => {
-    if (newPassword !== confirmPassword) {
+    if (newPassword && newPassword !== confirmPassword) {
       alert("Passwords do not match ❌");
       return;
     }
@@ -66,13 +36,12 @@ function Userdetails() {
         },
         {
           headers: {
-            // Authorization: `Bearer ${token}`,
-             Authorization: localStorage.getItem("token"),
+            authorization: localStorage.getItem("token"),
           },
         }
       );
 
-      setUser({ ...user, name });
+      await fetchUserDetails();
 
       setEditMode(false);
       setOldPassword("");
@@ -80,21 +49,22 @@ function Userdetails() {
       setConfirmPassword("");
 
       alert("Updated successfully ✅");
-
     } catch (err) {
       console.log(err);
       alert("Update failed ❌");
     }
   };
 
-  return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>User Profile</h2>
+  if (loading) return <h3>Loading...</h3>;
 
-      <div style={styles.card}>
+ return (
+  <div style={styles.container}>
+    <div style={styles.card}>
+      <h2 style={styles.title}>👤 User Profile</h2>
 
-        {/* NAME */}
-        <p style={styles.label}>Name:</p>
+      {/* NAME */}
+      <div style={styles.field}>
+        <label style={styles.label}>Name</label>
         {editMode ? (
           <input
             style={styles.input}
@@ -102,129 +72,153 @@ function Userdetails() {
             onChange={(e) => setName(e.target.value)}
           />
         ) : (
-          <p style={styles.text}>{user.name}</p>
+          <p style={styles.text}>{userData?.name}</p>
         )}
-
-        {/* EMAIL */}
-        <p style={styles.label}>Email:</p>
-        <p style={styles.text}>{user.email}</p>
-
-        {/* PASSWORD */}
-        {editMode && (
-          <>
-            <input
-              type="password"
-              placeholder="Old Password"
-              style={styles.input}
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-            />
-
-            <input
-              type="password"
-              placeholder="New Password"
-              style={styles.input}
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-
-            <input
-              type="password"
-              placeholder="Confirm Password"
-              style={styles.input}
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </>
-        )}
-
-        {/* BUTTONS */}
-        {!editMode ? (
-          <button
-            style={{ ...styles.btn, ...styles.editBtn }}
-            onClick={() => setEditMode(true)}
-          >
-            ✏️ Edit Profile
-          </button>
-
-        ) : (
-          <>
-            <button
-              style={{ ...styles.btn, ...styles.saveBtn }}
-              onClick={handleUpdate}
-            >
-              Save
-            </button>
-
-            <button
-              style={{ ...styles.btn, ...styles.cancelBtn }}
-              onClick={() => setEditMode(false)}
-            >
-              Cancel
-            </button>
-          </>
-        )}
-
       </div>
+
+      {/* EMAIL */}
+      <div style={styles.field}>
+        <label style={styles.label}>Email</label>
+        <p style={styles.text}>{userData?.email}</p>
+      </div>
+
+      {/* PASSWORD FIELDS */}
+      {editMode && (
+        <div style={styles.field}>
+          <input
+            type="password"
+            placeholder="Old Password"
+            style={styles.input}
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+          />
+
+          <input
+            type="password"
+            placeholder="New Password"
+            style={styles.input}
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            style={styles.input}
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div>
+      )}
+
+      {/* BUTTONS */}
+      {!editMode ? (
+        <button style={styles.editBtn} onClick={() => setEditMode(true)}>
+          ✏️ Edit Profile
+        </button>
+      ) : (
+        <div style={styles.btnGroup}>
+          <button style={styles.saveBtn} onClick={handleUpdate}>
+            Save
+          </button>
+          <button style={styles.cancelBtn} onClick={() => setEditMode(false)}>
+            Cancel
+          </button>
+        </div>
+      )}
     </div>
-  );
+  </div>
+);
 }
 
 export default Userdetails;
 
-
-// 🎨 Styles (same file)
 const styles = {
   container: {
     display: "flex",
-    flexDirection: "column",
+    justifyContent: "center",
     alignItems: "center",
-    marginTop: "60px",
+    height: "100vh",
+    background: "#f4f6f9",
     fontFamily: "Arial",
   },
-  title: {
-    marginBottom: "20px",
-  },
+
   card: {
     background: "#fff",
-    padding: "25px",
+    padding: "30px",
     borderRadius: "12px",
-    width: "320px",
+    width: "350px",
+    boxShadow: "0 8px 25px rgba(0,0,0,0.1)",
     textAlign: "center",
-    boxShadow: "0 4px 15px rgba(0,0,0,0.1)",
   },
+
+  title: {
+    marginBottom: "20px",
+    color: "#333",
+  },
+
+  field: {
+    marginBottom: "15px",
+    textAlign: "left",
+  },
+
   label: {
+    fontSize: "14px",
     fontWeight: "bold",
-    marginTop: "10px",
+    color: "#555",
   },
+
   text: {
-    marginBottom: "10px",
+    marginTop: "5px",
+    color: "#333",
   },
+
   input: {
     width: "100%",
     padding: "10px",
-    margin: "8px 0",
+    marginTop: "8px",
     borderRadius: "6px",
     border: "1px solid #ccc",
     outline: "none",
+    fontSize: "14px",
   },
-  btn: {
+
+  editBtn: {
+    width: "100%",
     padding: "10px",
-    margin: "5px",
+    background: "#4CAF50",
+    color: "white",
     border: "none",
     borderRadius: "6px",
     cursor: "pointer",
-    width: "45%",
-    color: "white",
+    marginTop: "10px",
   },
-  editBtn: {
-    background: "#4CAF50",
-    width: "100%",
+
+  btnGroup: {
+    display: "flex",
+    justifyContent: "space-between",
+    marginTop: "15px",
   },
+
   saveBtn: {
+    flex: 1,
+    marginRight: "5px",
+    padding: "10px",
     background: "#2196F3",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
   },
+
   cancelBtn: {
+    flex: 1,
+    marginLeft: "5px",
+    padding: "10px",
     background: "#f44336",
+    color: "white",
+    border: "none",
+    borderRadius: "6px",
+    cursor: "pointer",
   },
 };
