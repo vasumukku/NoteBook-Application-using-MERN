@@ -61,7 +61,7 @@ const Notebook = () => {
 
        toast.success("Note deleted successfully 🗑️");
       //  if(email)
-      navigate("/notes/admin");
+      navigate("/notes");
 
     } catch (error) {
       console.log(error);
